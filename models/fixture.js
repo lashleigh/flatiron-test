@@ -4,8 +4,8 @@ var fixtures = module.exports;
 fixtures.user = resourceful.define('user', function () {
   this.restful = true;
   this.use('couchdb', {
-    //uri: 'couchdb://127.0.0.1:5984/users' 
-    uri: 'couchdb://nodejitsudb784845289842.iriscouch.com:5984/users'
+    uri: 'couchdb://127.0.0.1:5984/users' 
+    //uri: 'couchdb://nodejitsudb784845289842.iriscouch.com:5984/users'
   });
   this.string('name', {
     required: true,
@@ -25,8 +25,8 @@ fixtures.user = resourceful.define('user', function () {
 fixtures.problem = resourceful.define('problem', function() {
   this.restful = true;
   this.use('couchdb', {
-    //uri: 'couchdb://127.0.0.1:5984/problems' 
-    uri: 'couchdb://nodejitsudb784845289842.iriscouch.com:5984/problems'
+    uri: 'couchdb://127.0.0.1:5984/problems' 
+    //uri: 'couchdb://nodejitsudb784845289842.iriscouch.com:5984/problems'
   });
 
   this.string('question');

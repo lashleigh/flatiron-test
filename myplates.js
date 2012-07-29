@@ -14,14 +14,18 @@ module.exports = (function() {
     {id: 2, 'name': 'Andy Kindler'},
     {id: 3, 'name': 'Greg Giraldo'}
   ];
-  var map = Plates.Map().class('id').to('name').where('href').has(/foo/).insert('id'); // `has` can take a regular expression.
+  var map = Plates.Map().class('name').to('name').where('href').has(/foo/).insert('id'); // `has` can take a regular expression.
   var index = Plates.bind(layout, {header: header, footer: footer});
   var home = Plates.bind(index, {content: Plates.bind(content, collection, map)})
   var user = { 
-    create : "<a href='/users'>Back</a></br></br>"+Plates.bind(index, {content: user}),
+    create : Plates.bind(index, {content: user}),
+    error: function(v) {
+      var map = Plates.Map().where('name').is('name').use('actual').as('value');
+      return _.map(v.errors, function(e) { return '<p>'+e.message+'</p>'; }).join('')+Plates.bind(this.create, v.errors, map);
+    },
     all: function(xs) {
-      var map = Plates.Map().class('id').to('name').where('href').has(/foo/).insert('id');
-      return Plates.bind(index, {content: Plates.bind(content, xs, map)})+"</br><a href='/users/new'>New</a>";
+      var map = Plates.Map().class('name').to('name').where('href').has(/foo/).insert('id');
+      return Plates.bind(index, {content: Plates.bind(content, xs, map)+"</br><a href='/users/new'>New</a>"})
     },
     edit : function(u) {
       var map = Plates.Map();
