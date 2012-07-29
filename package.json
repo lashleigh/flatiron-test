@@ -1,0 +1,28 @@
+{
+  "name": "flattest",
+  "author": "Ashleigh Baumgardner",
+  "homepage": "",
+  "description": "testing",
+  "version": "0.0.0-4",
+  "private": true,
+  "dependencies": {
+    "union": "0.3.0",
+    "flatiron": "0.2.5",
+    "plates": "*",
+    "resourceful": "*",
+    "restful": "*",
+    "underscore": "*"
+  },
+  "devDependencies": {
+    "api-easy": "0.3.2",
+    "vows": "0.6.1"
+  },
+  "scripts": {
+    "test": "vows --spec",
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "v0.6.x"
+  },
+  "subdomain": "lashleigh.flattest"
+}
