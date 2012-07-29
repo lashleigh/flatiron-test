@@ -3,7 +3,7 @@
   "author": "Ashleigh Baumgardner",
   "homepage": "",
   "description": "testing",
-  "version": "0.0.0-4",
+  "version": "0.0.0-6",
   "private": true,
   "dependencies": {
     "union": "0.3.0",
