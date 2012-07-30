@@ -4,24 +4,22 @@ var flatiron = require('flatiron')
   , restful = require('restful')
   , resourceful = require('resourceful')
   , nconf = require('nconf')
-  , config = require('./config/config')
   , fixture = require('./models/fixture')
   , myplates = require('./myplates');
 
 // Use the http plugin. This makes flatiron act as an http server with a
 // router on `app.router`.
-app.resources = {};
-app.resources.user = fixture.user;
-app.resources.problem = fixture.problem;
 app.use(flatiron.plugins.http, {
   headers: {
     'x-powered-by': 'flatiron ' + flatiron.version,
     'Access-Control-Allow-Origin': 'http://alghwstaging.kineticbooks.com'
   }
 });
-nconf.argv().env();
+
 nconf.use('file', {file: './config/config.json'});
 var database = nconf.get(app.env+':database')
+app.resources = {};
+app.resources.user = fixture.user;
 app.resources.user.use('couchdb', {uri: database+'/users'})
 // Route handler for http GET on the root path
 /*app.router.get('/', function () {
