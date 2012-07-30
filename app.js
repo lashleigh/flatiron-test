@@ -3,6 +3,8 @@ var flatiron = require('flatiron')
   , app = flatiron.app
   , restful = require('restful')
   , resourceful = require('resourceful')
+  , nconf = require('nconf')
+  , config = require('./config/config')
   , fixture = require('./models/fixture')
   , myplates = require('./myplates');
 
@@ -17,7 +19,10 @@ app.use(flatiron.plugins.http, {
     'Access-Control-Allow-Origin': 'http://alghwstaging.kineticbooks.com'
   }
 });
-
+nconf.argv().env();
+nconf.use('file', {file: './config/config.json'});
+var database = nconf.get(app.env+':database')
+app.resources.user.use('couchdb', {uri: database+'/users'})
 // Route handler for http GET on the root path
 /*app.router.get('/', function () {
   // Handle the response as you would normally.
@@ -26,10 +31,10 @@ app.use(flatiron.plugins.http, {
 });*/
 app.router.get('/users', function () {
   // Handle the response as you would normally.
-  var that = this;
+  var self = this;
   app.resources.user.all(function(err, doc) {
-    that.res.writeHead(200, { 'content-type': 'text/html'});
-    that.res.end(myplates.user.all(doc));
+    self.res.writeHead(200, { 'content-type': 'text/html'});
+    self.res.end(myplates.user.all(doc));
   });
 });
 app.router.get('/users/new', function() {
@@ -55,12 +60,12 @@ app.router.post('/users/new', function() {
 });
 
 app.router.get('/users/:id', function(id) {
-  var that = this;
+  var self = this;
   app.resources.user.get(id, function(err, doc) {
     if(!doc) return
     
-    that.res.writeHead(200, { 'content-type': 'text/html'});
-    that.res.end(myplates.user.edit(doc));
+    self.res.writeHead(200, { 'content-type': 'text/html'});
+    self.res.end(myplates.user.edit(doc));
   })
 });
 

@@ -1,12 +1,11 @@
-var resourceful = require('resourceful'),
-    config = require('../config/config')
-
+var resourceful = require('resourceful')
 var fixtures = module.exports;
+
 fixtures.user = resourceful.define('user', function () {
   this.restful = true;
-  this.use('couchdb', {
+  /*this.use('couchdb', {
     uri: config.db+'/users'
-  });
+  });*/
   this.string('name', {
     required: true,
     conform: function(val) { return val.length >= 4; },
