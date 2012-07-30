@@ -1,0 +1,50 @@
+@footerHeight: 43px;
+@problemHeight: 60px;
+@problemBarColor: #ccc;
+
+#container {
+  height: 100%;
+  margin-bottom: -@footerHeight;
+}
+#content {
+  padding: @footerHeight 0;
+}
+#map_canvas {
+  width: 500px;
+  height: 380px;
+}
+
+#problem_list {
+  padding: 10px;
+  .bar {
+    border-top: 2px solid @problemBarColor;
+    padding-left: 23px;
+  }
+}
+.problem {
+  height: @problemHeight;
+  line-height: @problemHeight;
+  padding-left: 13px;
+  border-bottom: 2px solid @problemBarColor;
+  &:hover, &:active {
+    background: rgb(255, 251, 204);
+  }
+}
+.problem .attr {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+.symbol {
+  background-image: url('/difficultyIcons.png');
+  background-position: 0px 0px;
+  margin-right: 13px !important;
+  margin-top: (@problemHeight - 23px) / 2;
+  width: 24px;
+  height: 25px;
+  z-index: 1;
+  float: left;
+}
+.index {
+  font: bold 26px Arial;
+  color: #F15B29
+}

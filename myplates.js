@@ -17,11 +17,13 @@ module.exports = (function() {
   var map = Plates.Map().class('name').to('name').where('href').has(/foo/).insert('id'); // `has` can take a regular expression.
   var index = Plates.bind(layout, {header: header, footer: footer});
   var home = Plates.bind(index, {content: Plates.bind(content, collection, map)})
-  var user = { 
+  var User = { 
     create : Plates.bind(index, {content: user}),
-    error: function(v) {
-      var map = Plates.Map().where('name').is('name').use('actual').as('value');
-      return _.map(v.errors, function(e) { return '<p>'+e.message+'</p>'; }).join('')+Plates.bind(this.create, v.errors, map);
+    error: function(params, errs) {
+      var err_html = Plates.bind('<div class="message"></div>', errs);
+      var map = Plates.Map();
+      _.each(params, function(v, k) {map.where('name').is(k).use(k).as('value');});
+      return Plates.bind(Plates.bind(this.create, params, map), {errors: err_html});
     },
     all: function(xs) {
       var map = Plates.Map().class('name').to('name').where('href').has(/foo/).insert('id');
@@ -38,6 +40,6 @@ module.exports = (function() {
   
   return {
     home: home,
-    user: user
+    user: User
   }
 })();

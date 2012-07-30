@@ -2,7 +2,12 @@
   <a href='/users'>Back</a>
 </div>
 </br>
-<form action="/users/new" method="post">
-  First name: <input type="text" name="name" value=""/><br />
-  <input type="submit" value="Submit" />
-</form>
+<div id="errors"> </div>
+<div id="user_form">
+  <form action="/users/new" method="post">
+    First name: <input type="text" name="name" value=""/><br />
+    Last name: <input type="text" name="lastName" value=""/><br />
+    Age: <input type="number" name="age" value=""/><br />
+    <input type="submit" value="Submit" />
+  </form>
+</div>

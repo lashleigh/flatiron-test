@@ -39,27 +39,27 @@ app.router.get('/users', function () {
     self.res.end(myplates.user.all(doc));
   });
 });
-app.router.get('/users/new', function() {
-  this.res.writeHead(200, { 'content-type': 'text/html'});
-  this.res.end(myplates.user.create);
+app.router.path('/users/new', function() {
+  this.get(function() {
+    this.res.writeHead(200, { 'content-type': 'text/html'});
+    this.res.end(myplates.user.create);
+  });
+  this.post(function() {
+    var self = this;
+    var user = new app.resources.user(self.req.body);
+    var v = user.validate();
+    if(v.valid) {
+      user.save(function(err, doc) {
+        self.res.writeHead(303, { 'Location': '/users/'+doc._id});
+        self.res.end(myplates.user.edit(doc));
+      });
+    } else {
+      console.log(v, self.req.body);
+      self.res.writeHead(200, { 'content-type': 'text/html'});
+      self.res.end(myplates.user.error(self.req.body, v.errors));
+    }
+  });
 })
-app.router.post('/users/new', function() {
-  var self = this;
-  var user = new app.resources.user(self.req.body);
-  var v = user.validate();
-  if(v.valid) {
-    user.save(function(err, doc) {
-      self.res.writeHead(303, { 'Location': '/users/'+doc._id});
-      self.res.end(myplates.user.edit(doc));
-    });
-  } else {
-    console.log(v);
-    self.res.writeHead(200, { 'content-type': 'text/html'});
-    self.res.end(myplates.user.error(v));
-  }
-  //self.res.writeHead(303, {'Location': '/users'});
-  //self.res.end();
-});
 
 app.router.get('/users/:id', function(id) {
   var self = this;
@@ -72,7 +72,6 @@ app.router.get('/users/:id', function(id) {
 });
 
 app.use(restful);
-// Start the server!
 app.start(8080, function (err) {
   if (err) {
     // This would be a server initialization error. If we have one of these,
