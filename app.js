@@ -4,6 +4,7 @@ var flatiron = require('flatiron')
   , restful = require('restful')
   , resourceful = require('resourceful')
   , nconf = require('nconf')
+  , ecstatic = require('ecstatic')
   , fixture = require('./models/fixture')
   , myplates = require('./myplates');
 
@@ -15,6 +16,9 @@ app.use(flatiron.plugins.http, {
     'Access-Control-Allow-Origin': 'http://alghwstaging.kineticbooks.com'
   }
 });
+app.http.before = [
+  ecstatic(__dirname + '/public')
+];
 
 nconf.use('file', {file: './config/config.json'});
 var database = nconf.get(app.env+':database')
