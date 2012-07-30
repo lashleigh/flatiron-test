@@ -16,8 +16,8 @@ fixtures.user = resourceful.define('user', function () {
     message: 'Name must be at least 2 characters'
   });
   this.number('age', {
-    required: false,
-    conform: function(val) {return val >= 5 && val <= 75;},
+    minimum: 5,
+    maximum: 105,
     message: 'A reasonable age please'
   });
 
@@ -30,6 +30,9 @@ fixtures.user = resourceful.define('user', function () {
   this.on('error', function() {
     console.log(arguments);
   })
+  this.hook('valid', 'before', function(instance, cb) {
+    console.log('before validate', instance);
+  });
 });
 fixtures.problem = resourceful.define('problem', function() {
   this.restful = true;

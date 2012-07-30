@@ -7,17 +7,11 @@ module.exports = (function() {
   var header = fs.readFileSync("./views/_header.html", "utf-8");
   var footer = fs.readFileSync("./views/_footer.html", "utf-8");
   var content = fs.readFileSync("./views/content.html", "utf-8");
+  var userItem= fs.readFileSync("./views/_user.html", "utf-8");
   var user    = fs.readFileSync("./views/user.html", "utf-8");
   
-  var collection = [
-    {id: 1, place: 'france', 'name': 'Louis CK'},
-    {id: 2, 'name': 'Andy Kindler'},
-    {id: 3, 'name': 'Greg Giraldo'}
-  ];
-  var map = Plates.Map().class('name').to('name').where('href').has(/foo/).insert('id'); // `has` can take a regular expression.
   var index = Plates.bind(layout, {header: header, footer: footer});
-  var home = Plates.bind(index, {content: Plates.bind(content, collection, map)})
-  var User = { 
+  var UserViews = { 
     create : Plates.bind(index, {content: user}),
     error: function(params, errs) {
       var err_html = Plates.bind('<div class="message"></div>', errs);
@@ -27,7 +21,7 @@ module.exports = (function() {
     },
     all: function(xs) {
       var map = Plates.Map().class('name').to('name').where('href').has(/foo/).insert('id');
-      return Plates.bind(index, {content: Plates.bind(content, xs, map)+"</br><a href='/users/new'>New</a>"})
+      return Plates.bind(index, {content: Plates.bind(content, {users: Plates.bind(userItem, xs, map)})})
     },
     edit : function(u) {
       var map = Plates.Map();
@@ -39,7 +33,6 @@ module.exports = (function() {
   }
   
   return {
-    home: home,
-    user: User
+    user: UserViews
   }
 })();

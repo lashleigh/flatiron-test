@@ -24,6 +24,7 @@ nconf.use('file', {file: './config/config.json'});
 var database = nconf.get(app.env+':database')
 app.resources = {};
 app.resources.user = fixture.user;
+    console.log(app.resources.user)
 app.resources.user.use('couchdb', {uri: database+'/users'})
 // Route handler for http GET on the root path
 /*app.router.get('/', function () {
@@ -54,7 +55,6 @@ app.router.path('/users/new', function() {
         self.res.end(myplates.user.edit(doc));
       });
     } else {
-      console.log(v, self.req.body);
       self.res.writeHead(200, { 'content-type': 'text/html'});
       self.res.end(myplates.user.error(self.req.body, v.errors));
     }
